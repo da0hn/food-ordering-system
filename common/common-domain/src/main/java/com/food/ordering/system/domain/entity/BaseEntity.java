@@ -7,24 +7,24 @@ public abstract class BaseEntity<ID> {
   private ID id;
 
   public ID getId() {
-    return id;
+    return this.id;
   }
 
-  public void setId(ID id) {
+  public void setId(final ID id) {
     this.id = id;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(this.id);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if(this == o) return true;
-    if(o == null || getClass() != o.getClass()) return false;
-    BaseEntity<?> that = (BaseEntity<?>) o;
-    return id.equals(that.id);
+    if(o == null || this.getClass() != o.getClass()) return false;
+    final BaseEntity<?> that = (BaseEntity<?>) o;
+    return this.id.equals(that.id);
   }
 
 }
