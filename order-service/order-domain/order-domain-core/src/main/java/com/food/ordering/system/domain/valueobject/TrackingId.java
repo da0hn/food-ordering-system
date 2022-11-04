@@ -9,4 +9,8 @@ public class TrackingId extends BaseId<UUID> {
     super(value);
   }
 
+  public static TrackingId newInstance() {
+    return new TrackingId(UUID.randomUUID());
+  }
+
 }

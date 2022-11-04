@@ -8,6 +8,7 @@ import java.util.Optional;
 public class Money {
 
   private final BigDecimal amount;
+  public static final Money ZERO = new Money(BigDecimal.ZERO);
 
   public Money(final BigDecimal amount) {
     this.amount = Money.setScale(amount);

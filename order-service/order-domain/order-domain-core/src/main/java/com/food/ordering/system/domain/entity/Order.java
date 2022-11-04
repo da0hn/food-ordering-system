@@ -1,8 +1,10 @@
 package com.food.ordering.system.domain.entity;
 
+import com.food.ordering.system.domain.exception.OrderDomainException;
 import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
+import com.food.ordering.system.domain.valueobject.OrderItemId;
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.domain.valueobject.StreetAddress;
@@ -18,9 +20,9 @@ public class Order extends AggregateRoot<OrderId> {
   private final StreetAddress deliveryAddress;
   private final Money price;
   private final List<OrderItem> items;
-  private final TrackingId trackingId;
-  private final OrderStatus orderStatus;
   private final List<String> failureMessages;
+  private TrackingId trackingId;
+  private OrderStatus orderStatus;
 
   private Order(final Builder builder) {
     super.setId(builder.id);
@@ -38,6 +40,63 @@ public class Order extends AggregateRoot<OrderId> {
     return new Builder();
   }
 
+  public void initializeOrder() {
+    this.setId(OrderId.newInstance());
+    this.trackingId = TrackingId.newInstance();
+    this.orderStatus = OrderStatus.PENDING;
+    this.initializeOrderItems();
+  }
+
+  private void initializeOrderItems() {
+    long itemId = 1;
+    for(final var orderItem : this.items) {
+      orderItem.initializeOrderItem(this.getId(), new OrderItemId(itemId++));
+    }
+  }
+
+  public void validateOrder() {
+    this.validateInitialOrder();
+    this.validateTotalPrice();
+    this.validateItemsPrice();
+  }
+
+  private void validateItemsPrice() {
+    final var orderItemsTotal = this.items.stream().map(orderItem -> {
+      this.validateItemPrice(orderItem);
+      return orderItem.getSubTotal();
+    }).reduce(Money.ZERO, Money::add);
+
+    if(!this.price.equals(orderItemsTotal)) {
+      throw new OrderDomainException(
+        "Total price: {0} is not equal to order items total: {1}",
+        this.price.getAmount(),
+        orderItemsTotal.getAmount()
+      );
+    }
+
+  }
+
+  private void validateItemPrice(final OrderItem orderItem) {
+    if(!orderItem.isPriceValid()) {
+      throw new OrderDomainException(
+        "Order item price: {0} is not valid for product {1}",
+        orderItem.getPrice().getAmount(),
+        orderItem.getProduct().getId().getValue()
+      );
+    }
+  }
+
+  private void validateTotalPrice() {
+    if(this.price == null || !this.price.isGreaterThanZero()) {
+      throw new OrderDomainException("Total price must be greater than zero!");
+    }
+  }
+
+  private void validateInitialOrder() {
+    if(this.orderStatus != null || this.getId() != null) {
+      throw new OrderDomainException("Order is not in correct state for initialization!");
+    }
+  }
 
   public CustomerId getCustomerId() {
     return this.customerId;

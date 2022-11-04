@@ -8,4 +8,8 @@ public class OrderId extends BaseId<UUID> {
     super(value);
   }
 
+  public static OrderId newInstance() {
+    return new OrderId(UUID.randomUUID());
+  }
+
 }
