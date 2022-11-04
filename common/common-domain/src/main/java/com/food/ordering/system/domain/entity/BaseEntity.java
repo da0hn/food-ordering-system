@@ -6,6 +6,13 @@ public abstract class BaseEntity<ID> {
 
   private ID id;
 
+  protected BaseEntity(final ID id) {
+    this.id = id;
+  }
+
+  protected BaseEntity() {
+  }
+
   public ID getId() {
     return this.id;
   }
