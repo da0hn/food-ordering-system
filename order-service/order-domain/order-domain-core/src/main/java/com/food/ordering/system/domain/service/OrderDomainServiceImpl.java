@@ -13,6 +13,28 @@ import java.util.List;
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
 
+  @Override
+  public OrderCreatedEvent validateAndInitiateOrder(
+    final Order order,
+    final Restaurant restaurant
+  ) {
+    validateRestaurant(restaurant);
+    setOrderProductInformation(order, restaurant);
+    order.validateOrder();
+    order.initializeOrder();
+    log.info("Order with id: {} is initialized", order.getId().getValue());
+    return new OrderCreatedEvent(order);
+  }
+
+  private static void validateRestaurant(final Restaurant restaurant) {
+    if (!restaurant.isActive()) {
+      throw new OrderDomainException(
+        "Restaurant with id {0} is currently not active!",
+        restaurant.getId().getValue()
+      );
+    }
+  }
+
   private static void setOrderProductInformation(
     final Order order,
     final Restaurant restaurant
@@ -32,28 +54,6 @@ public class OrderDomainServiceImpl implements OrderDomainService {
       });
 
     });
-  }
-
-  private static void validateRestaurant(final Restaurant restaurant) {
-    if (!restaurant.isActive()) {
-      throw new OrderDomainException(
-        "Restaurant with id {0} is currently not active!",
-        restaurant.getId().getValue()
-      );
-    }
-  }
-
-  @Override
-  public OrderCreatedEvent validateAndInitiateOrder(
-    final Order order,
-    final Restaurant restaurant
-  ) {
-    validateRestaurant(restaurant);
-    setOrderProductInformation(order, restaurant);
-    order.validateOrder();
-    order.initializeOrder();
-    log.info("Order with id: {} is initialized", order.getId().getValue());
-    return new OrderCreatedEvent(order);
   }
 
   @Override
