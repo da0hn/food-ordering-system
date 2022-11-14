@@ -8,8 +8,6 @@ import com.food.ordering.system.domain.event.OrderPaidEvent;
 import com.food.ordering.system.domain.exception.OrderDomainException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
@@ -55,14 +53,14 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     order.validateOrder();
     order.initializeOrder();
     log.info("Order with id: {} is initialized", order.getId().getValue());
-    return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of("UTC")));
+    return new OrderCreatedEvent(order);
   }
 
   @Override
   public OrderPaidEvent payOrder(final Order order) {
     order.pay();
     log.info("Order with id: {} is paid", order.getId().getValue());
-    return new OrderPaidEvent(order, ZonedDateTime.now(ZoneId.of("UTC")));
+    return new OrderPaidEvent(order);
   }
 
   @Override
@@ -78,7 +76,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   ) {
     order.initializeCancel(failureMessages);
     log.info("Order payment is cancelling for order id: {}", order.getId().getValue());
-    return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of("UTC")));
+    return new OrderCancelledEvent(order);
   }
 
   @Override
