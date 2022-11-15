@@ -13,4 +13,8 @@ public class TrackingId extends BaseId<UUID> {
     return new TrackingId(UUID.randomUUID());
   }
 
+  public static TrackingId of(final UUID value) {
+    return new TrackingId(value);
+  }
+
 }
