@@ -18,6 +18,10 @@ public class Product extends BaseEntity<ProductId> {
     this.price = price;
   }
 
+  public static Product of(final ProductId productId) {
+    return new Product(productId, null, null);
+  }
+
   public String getName() {
     return this.name;
   }

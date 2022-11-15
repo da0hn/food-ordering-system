@@ -8,4 +8,8 @@ public class RestaurantId extends BaseId<UUID> {
     super(value);
   }
 
+  public static RestaurantId of(final UUID value) {
+    return new RestaurantId(value);
+  }
+
 }

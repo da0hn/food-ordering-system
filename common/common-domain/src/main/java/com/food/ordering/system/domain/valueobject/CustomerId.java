@@ -8,4 +8,8 @@ public class CustomerId extends BaseId<UUID> {
     super(value);
   }
 
+  public static CustomerId of(final UUID value) {
+    return new CustomerId(value);
+  }
+
 }
