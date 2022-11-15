@@ -12,4 +12,8 @@ public class OrderId extends BaseId<UUID> {
     return new OrderId(UUID.randomUUID());
   }
 
+  public static OrderId of(final UUID value) {
+    return new OrderId(value);
+  }
+
 }
