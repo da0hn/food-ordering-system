@@ -67,9 +67,10 @@ public class OrderDataMapper {
       .toList();
   }
 
-  public CreateOrderResponse orderToCreateOrderResponse(final Order order) {
+  public CreateOrderResponse orderToCreateOrderResponse(final Order order, final String message) {
     return CreateOrderResponse.builder()
       .orderTrackingId(order.getTrackingId().getValue())
+      .message(message)
       .orderStatus(order.getOrderStatus())
       .build();
   }
