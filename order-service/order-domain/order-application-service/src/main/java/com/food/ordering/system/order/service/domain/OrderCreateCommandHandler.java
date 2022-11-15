@@ -26,6 +26,7 @@ public class OrderCreateCommandHandler {
   private final OrderRepository orderRepository;
   private final CustomerRepository customerRepository;
   private final RestaurantRepository restaurantRepository;
+  private final ApplicationDomainEventPublisher applicationDomainEventPublisher;
   private final OrderDataMapper orderDataMapper;
 
   @Transactional
@@ -35,6 +36,7 @@ public class OrderCreateCommandHandler {
     final var order = this.orderDataMapper.createOrderCommandToOrder(command);
     final var orderCreatedEvent = this.orderDomainService.validateAndInitiateOrder(order, restaurant);
     final var savedOrder = this.saveOrder(order);
+    this.applicationDomainEventPublisher.publish(orderCreatedEvent);
     return this.orderDataMapper.orderToCreateOrderResponse(savedOrder);
   }
 
