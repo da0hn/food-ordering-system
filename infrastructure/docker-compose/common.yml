@@ -1,0 +1,6 @@
+version: '3.8'
+
+networks:
+  food-ordering-system:
+    driver: bridge
+    name: food-ordering-system-network
