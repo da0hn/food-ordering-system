@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.application.exception.handler;
 
+import com.food.ordering.system.common.application.handler.ErrorResponse;
 import com.food.ordering.system.domain.exception.OrderDomainException;
 import com.food.ordering.system.domain.exception.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
