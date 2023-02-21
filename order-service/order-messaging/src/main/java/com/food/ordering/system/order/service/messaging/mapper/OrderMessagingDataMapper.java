@@ -3,11 +3,17 @@ package com.food.ordering.system.order.service.messaging.mapper;
 import com.food.ordering.system.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.domain.event.OrderPaidEvent;
+import com.food.ordering.system.domain.valueobject.OrderApprovalStatus;
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.Product;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantOrderStatus;
+import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
+import com.food.ordering.system.order.service.domain.dto.message.RestaurantApprovalResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -66,5 +72,31 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
+
+  public PaymentResponse paymentResponseAvroModelToPaymentResponse(final PaymentResponseAvroModel responseAvroModel) {
+    return PaymentResponse.builder()
+      .id(responseAvroModel.getId())
+      .orderId(responseAvroModel.getOrderId())
+      .paymentId(responseAvroModel.getPaymentId())
+      .customerId(responseAvroModel.getCustomerId())
+      .sagaId(responseAvroModel.getSagaId())
+      .createdAt(responseAvroModel.getCreatedAt())
+      .price(responseAvroModel.getPrice())
+      .paymentStatus(PaymentStatus.valueOf(responseAvroModel.getPaymentStatus().name()))
+      .failureMessages(responseAvroModel.getFailureMessages())
+      .build();
+  }
+
+  public RestaurantApprovalResponse restaurantApprovalResponseAvroModelToRestaurantApprovalResponse(final RestaurantApprovalResponseAvroModel response) {
+    return RestaurantApprovalResponse.builder()
+      .id(response.getId())
+      .orderId(response.getOrderId())
+      .restaurantId(response.getRestaurantId())
+      .sagaId(response.getSagaId())
+      .createdAt(response.getCreatedAt())
+      .failureMessages(response.getFailureMessages())
+      .orderApprovalStatus(OrderApprovalStatus.valueOf(response.getOrderApprovalStatus().name()))
+      .build();
+  }
 
 }
