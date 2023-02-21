@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,6 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class OrderItemEntityId implements Serializable {
 
+  @Serial private static final long serialVersionUID = -8413664348625230138L;
   private Long id;
   private OrderEntity order;
 
