@@ -24,7 +24,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ordem_items")
+@Table(name = "order_items")
 @IdClass(OrderItemEntityId.class)
 public class OrderItemEntity {
 
@@ -33,7 +33,7 @@ public class OrderItemEntity {
 
   @Id
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "ORDER_ID")
+  @JoinColumn(name = "order_id")
   private OrderEntity order;
 
   private UUID productId;
