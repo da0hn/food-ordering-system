@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  food-ordering-system-database:
+    image: postgres
+    container_name: food-ordering-system-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    restart: on-failure
+    volumes:
+      - ./volumes/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - ${GLOBAL_NETWORK:-database}
