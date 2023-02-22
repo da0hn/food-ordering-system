@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Order extends AggregateRoot<OrderId> {
@@ -64,6 +65,18 @@ public class Order extends AggregateRoot<OrderId> {
     this.validateItemsPrice();
   }
 
+  private void validateInitialOrder() {
+    if (this.orderStatus != null || this.getId() != null) {
+      throw new OrderDomainException("Order is not in correct state for initialization!");
+    }
+  }
+
+  private void validateTotalPrice() {
+    if (this.price == null || !this.price.isGreaterThanZero()) {
+      throw new OrderDomainException("Total price must be greater than zero!");
+    }
+  }
+
   private void validateItemsPrice() {
     final var orderItemsTotal = this.items.stream().map(orderItem -> {
       this.validateItemPrice(orderItem);
@@ -87,18 +100,6 @@ public class Order extends AggregateRoot<OrderId> {
         orderItem.getPrice().getAmount(),
         orderItem.getProduct().getId().getValue()
       );
-    }
-  }
-
-  private void validateTotalPrice() {
-    if (this.price == null || !this.price.isGreaterThanZero()) {
-      throw new OrderDomainException("Total price must be greater than zero!");
-    }
-  }
-
-  private void validateInitialOrder() {
-    if (this.orderStatus != null || this.getId() != null) {
-      throw new OrderDomainException("Order is not in correct state for initialization!");
     }
   }
 
@@ -160,7 +161,9 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   public List<OrderItem> getItems() {
-    return Collections.unmodifiableList(this.items);
+    return Optional.ofNullable(this.items)
+      .map(Collections::unmodifiableList)
+      .orElse(new ArrayList<>());
   }
 
   public TrackingId getTrackingId() {
@@ -172,7 +175,9 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   public List<String> getFailureMessages() {
-    return Collections.unmodifiableList(this.failureMessages);
+    return Optional.ofNullable(this.failureMessages)
+      .map(Collections::unmodifiableList)
+      .orElse(new ArrayList<>());
   }
 
   public static final class Builder {
