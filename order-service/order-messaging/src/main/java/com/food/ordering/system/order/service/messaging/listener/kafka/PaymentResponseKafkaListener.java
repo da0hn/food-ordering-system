@@ -28,8 +28,8 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
   @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}", topics = "${order-service.payment-response-topic-name}")
   public void receive(
     @Payload final List<PaymentResponseAvroModel> message,
-    @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) final List<String> keys,
-    @Header(KafkaHeaders.RECEIVED_PARTITION_ID) final List<Integer> partitions,
+    @Header(KafkaHeaders.RECEIVED_KEY) final List<String> keys,
+    @Header(KafkaHeaders.RECEIVED_PARTITION) final List<Integer> partitions,
     @Header(KafkaHeaders.OFFSET) final List<Long> offsets
   ) {
     log.info(
