@@ -1,4 +1,4 @@
-package com.food.ordering.system.payment.service.domain;
+package com.food.ordering.system.payment.service.domain.service;
 
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.PaymentStatus;
