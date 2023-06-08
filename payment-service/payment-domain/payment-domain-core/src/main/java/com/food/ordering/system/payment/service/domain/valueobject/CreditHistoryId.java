@@ -8,4 +8,8 @@ public class CreditHistoryId extends BaseId<UUID> {
   public CreditHistoryId(final UUID value) {
     super(value);
   }
+
+  public static CreditHistoryId newInstance() {
+    return new CreditHistoryId(UUID.randomUUID());
+  }
 }
