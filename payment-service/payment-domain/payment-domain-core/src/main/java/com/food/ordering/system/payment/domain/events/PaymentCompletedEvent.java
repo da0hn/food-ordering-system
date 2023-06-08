@@ -1,11 +1,10 @@
-package com.food.ordering.system.payment.service.domain.events;
+package com.food.ordering.system.payment.domain.events;
 
-import com.food.ordering.system.payment.service.domain.entity.Payment;
+import com.food.ordering.system.payment.domain.entity.Payment;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PaymentCompletedEvent extends PaymentEvent {
   private PaymentCompletedEvent(
