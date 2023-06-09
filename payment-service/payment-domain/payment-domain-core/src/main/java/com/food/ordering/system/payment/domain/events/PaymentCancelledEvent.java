@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
-public class PaymentCancelledEvent extends PaymentEvent {
+public non-sealed class PaymentCancelledEvent extends PaymentEvent {
   protected PaymentCancelledEvent(
     final Payment payment,
     final ZonedDateTime createdAt

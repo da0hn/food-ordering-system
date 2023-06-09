@@ -6,7 +6,7 @@ import com.food.ordering.system.payment.domain.entity.Payment;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public abstract class PaymentEvent implements DomainEvent<Payment> {
+public abstract sealed class PaymentEvent implements DomainEvent<Payment> permits PaymentCompletedEvent, PaymentCancelledEvent, PaymentFailedEvent {
 
   private final Payment payment;
   private final ZonedDateTime createdAt;
