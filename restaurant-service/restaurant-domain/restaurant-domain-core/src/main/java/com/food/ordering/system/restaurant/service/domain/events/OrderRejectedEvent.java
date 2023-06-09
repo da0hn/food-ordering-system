@@ -2,7 +2,9 @@ package com.food.ordering.system.restaurant.service.domain.events;
 
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
+import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -15,5 +17,14 @@ public class OrderRejectedEvent extends OrderApprovalEvent {
     final ZonedDateTime createdAt
   ) {
     super(orderApproval, restaurantId, failureMessages, createdAt);
+  }
+
+  public static OrderApprovalEvent newInstance(final Restaurant restaurant, final List<String> failureMessages) {
+    return new OrderRejectedEvent(
+      restaurant.getOrderApproval(),
+      restaurant.getId(),
+      failureMessages,
+      ZonedDateTime.now(ZoneId.of("UTC"))
+    );
   }
 }
