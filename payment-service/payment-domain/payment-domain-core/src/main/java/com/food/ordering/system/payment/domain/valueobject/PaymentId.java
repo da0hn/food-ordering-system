@@ -5,7 +5,11 @@ import com.food.ordering.system.domain.valueobject.BaseId;
 import java.util.UUID;
 
 public class PaymentId extends BaseId<UUID> {
-  public PaymentId(UUID value) {
+  public PaymentId(final UUID value) {
     super(value);
+  }
+
+  public static PaymentId of(final UUID id) {
+    return new PaymentId(id);
   }
 }
