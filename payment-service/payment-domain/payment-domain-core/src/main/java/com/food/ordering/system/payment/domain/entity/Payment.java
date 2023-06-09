@@ -30,6 +30,10 @@ public class Payment extends AggregateRoot<PaymentId> {
     this.createdAt = builder.createdAt;
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   public void initializePayment() {
     this.setId(new PaymentId(UUID.randomUUID()));
     this.createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
@@ -61,11 +65,9 @@ public class Payment extends AggregateRoot<PaymentId> {
     return this.paymentStatus;
   }
 
-
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
-
 
   public static final class Builder {
     private PaymentId paymentId;
@@ -76,10 +78,6 @@ public class Payment extends AggregateRoot<PaymentId> {
     private ZonedDateTime createdAt;
 
     private Builder() {
-    }
-
-    public static Builder builder() {
-      return new Builder();
     }
 
     public Builder paymentId(final PaymentId val) {
