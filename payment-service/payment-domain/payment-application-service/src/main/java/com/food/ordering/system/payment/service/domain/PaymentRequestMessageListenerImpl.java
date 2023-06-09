@@ -1,9 +1,9 @@
 package com.food.ordering.system.payment.service.domain;
 
-import com.food.ordering.system.payment.domain.events.PaymentCancelledEvent;
-import com.food.ordering.system.payment.domain.events.PaymentCompletedEvent;
-import com.food.ordering.system.payment.domain.events.PaymentEvent;
-import com.food.ordering.system.payment.domain.events.PaymentFailedEvent;
+import com.food.ordering.system.payment.service.domain.events.PaymentCancelledEvent;
+import com.food.ordering.system.payment.service.domain.events.PaymentCompletedEvent;
+import com.food.ordering.system.payment.service.domain.events.PaymentEvent;
+import com.food.ordering.system.payment.service.domain.events.PaymentFailedEvent;
 import com.food.ordering.system.payment.service.domain.dto.PaymentRequest;
 import com.food.ordering.system.payment.service.domain.ports.api.message.listener.PaymentRequestMessageListener;
 import com.food.ordering.system.payment.service.domain.ports.spi.message.publisher.PaymentCancelledMessagePublisher;

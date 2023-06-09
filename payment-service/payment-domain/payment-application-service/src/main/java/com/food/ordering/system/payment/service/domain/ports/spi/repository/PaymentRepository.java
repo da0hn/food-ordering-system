@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.domain.ports.spi.repository;
 
-import com.food.ordering.system.payment.domain.entity.Payment;
+import com.food.ordering.system.payment.service.domain.entity.Payment;
 
 import java.util.Optional;
 import java.util.UUID;

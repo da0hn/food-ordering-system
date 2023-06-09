@@ -1,7 +1,7 @@
 package com.food.ordering.system.payment.service.dataaccess.credit.history.adapter;
 
 import com.food.ordering.system.domain.valueobject.CustomerId;
-import com.food.ordering.system.payment.domain.entity.CreditHistory;
+import com.food.ordering.system.payment.service.domain.entity.CreditHistory;
 import com.food.ordering.system.payment.service.dataaccess.credit.history.mapper.CreditHistoryDataAccessMapper;
 import com.food.ordering.system.payment.service.dataaccess.credit.history.repository.CreditHistoryJpaRepository;
 import com.food.ordering.system.payment.service.domain.ports.spi.repository.CreditHistoryRepository;

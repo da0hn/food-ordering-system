@@ -3,7 +3,7 @@ package com.food.ordering.system.payment.service.messaging.publisher.kafka;
 import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.food.ordering.system.kafka.producer.KafkaMessageHelper;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
-import com.food.ordering.system.payment.domain.events.PaymentCompletedEvent;
+import com.food.ordering.system.payment.service.domain.events.PaymentCompletedEvent;
 import com.food.ordering.system.payment.service.domain.config.PaymentServiceConfigData;
 import com.food.ordering.system.payment.service.domain.ports.spi.message.publisher.PaymentCompletedMessagePublisher;
 import com.food.ordering.system.payment.service.messaging.mapper.PaymentMessagingDataMapper;

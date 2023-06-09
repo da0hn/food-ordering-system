@@ -1,9 +1,9 @@
-package com.food.ordering.system.payment.domain.service;
+package com.food.ordering.system.payment.service.domain.service;
 
-import com.food.ordering.system.payment.domain.entity.Payment;
-import com.food.ordering.system.payment.domain.entity.CreditEntry;
-import com.food.ordering.system.payment.domain.entity.CreditHistory;
-import com.food.ordering.system.payment.domain.events.PaymentEvent;
+import com.food.ordering.system.payment.service.domain.entity.Payment;
+import com.food.ordering.system.payment.service.domain.entity.CreditEntry;
+import com.food.ordering.system.payment.service.domain.entity.CreditHistory;
+import com.food.ordering.system.payment.service.domain.events.PaymentEvent;
 
 import java.util.List;
 

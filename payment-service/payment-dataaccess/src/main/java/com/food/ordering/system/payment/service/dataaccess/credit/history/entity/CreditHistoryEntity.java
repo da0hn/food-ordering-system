@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.dataaccess.credit.history.entity;
 
-import com.food.ordering.system.payment.domain.valueobject.TransactionType;
+import com.food.ordering.system.payment.service.domain.valueobject.TransactionType;
 import lombok.*;
 
 import javax.persistence.*;
