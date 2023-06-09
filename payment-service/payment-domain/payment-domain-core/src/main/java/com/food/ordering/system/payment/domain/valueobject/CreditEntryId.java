@@ -8,4 +8,8 @@ public class CreditEntryId extends BaseId<UUID> {
   public CreditEntryId(final UUID value) {
     super(value);
   }
+
+  public static CreditEntryId of(final UUID value) {
+    return new CreditEntryId(value);
+  }
 }
