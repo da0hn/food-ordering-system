@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class OrderRejectedEvent extends OrderApprovalEvent {
+public final class OrderRejectedEvent extends OrderApprovalEvent {
 
   protected OrderRejectedEvent(
     final OrderApproval orderApproval,

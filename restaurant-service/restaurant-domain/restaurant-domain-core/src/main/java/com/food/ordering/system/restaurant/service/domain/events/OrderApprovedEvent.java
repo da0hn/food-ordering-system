@@ -7,7 +7,7 @@ import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class OrderApprovedEvent extends OrderApprovalEvent {
+public final class OrderApprovedEvent extends OrderApprovalEvent {
 
 
   protected OrderApprovedEvent(

@@ -7,7 +7,7 @@ import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public abstract class OrderApprovalEvent implements DomainEvent<OrderApproval> {
+public abstract sealed class OrderApprovalEvent implements DomainEvent<OrderApproval> permits OrderApprovedEvent, OrderRejectedEvent {
 
   private final OrderApproval orderApproval;
   private final RestaurantId restaurantId;
