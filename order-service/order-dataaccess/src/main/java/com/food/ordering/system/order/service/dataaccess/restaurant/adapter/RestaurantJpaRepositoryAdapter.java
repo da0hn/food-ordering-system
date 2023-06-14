@@ -1,8 +1,8 @@
 package com.food.ordering.system.order.service.dataaccess.restaurant.adapter;
 
+import com.food.ordering.system.dataaccess.restaurant.repository.RestaurantJpaRepository;
 import com.food.ordering.system.domain.entity.Restaurant;
 import com.food.ordering.system.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper;
-import com.food.ordering.system.order.service.dataaccess.restaurant.repository.RestaurantJpaRepository;
 import com.food.ordering.system.order.service.domain.ports.spi.repository.RestaurantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
