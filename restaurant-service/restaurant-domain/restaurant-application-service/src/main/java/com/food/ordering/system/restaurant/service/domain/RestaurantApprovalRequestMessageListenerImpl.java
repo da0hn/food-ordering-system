@@ -1,12 +1,9 @@
 package com.food.ordering.system.restaurant.service.domain;
 
+import com.food.ordering.system.domain.event.DomainEvent;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
-import com.food.ordering.system.restaurant.service.domain.events.OrderApprovalEvent;
-import com.food.ordering.system.restaurant.service.domain.events.OrderApprovedEvent;
-import com.food.ordering.system.restaurant.service.domain.events.OrderRejectedEvent;
+import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
 import com.food.ordering.system.restaurant.service.domain.ports.api.message.listener.RestaurantApprovalRequestMessageListener;
-import com.food.ordering.system.restaurant.service.domain.ports.spi.message.publisher.OrderApprovedMessagePublisher;
-import com.food.ordering.system.restaurant.service.domain.ports.spi.message.publisher.OrderRejectedMessagePublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Service;
 public class RestaurantApprovalRequestMessageListenerImpl implements RestaurantApprovalRequestMessageListener {
 
   private final RestaurantApprovalRequestHelper restaurantApprovalRequestHelper;
-  private final OrderApprovedMessagePublisher orderApprovedMessagePublisher;
-  private final OrderRejectedMessagePublisher orderRejectedMessagePublisher;
 
   @Override
   public void approveOrder(final RestaurantApprovalRequest restaurantApprovalRequest) {
@@ -26,10 +21,7 @@ public class RestaurantApprovalRequestMessageListenerImpl implements RestaurantA
     this.fire(orderApprovalEvent);
   }
 
-  private void fire(final OrderApprovalEvent orderApprovalEvent) {
-    switch (orderApprovalEvent) {
-      case final OrderApprovedEvent event -> this.orderApprovedMessagePublisher.publish(event);
-      case final OrderRejectedEvent event -> this.orderRejectedMessagePublisher.publish(event);
-    }
+  private void fire(final DomainEvent<OrderApproval> event) {
+    event.fire();
   }
 }

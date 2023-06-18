@@ -9,7 +9,7 @@ public class OrderCreatedEvent extends OrderEvent {
 
 
   public OrderCreatedEvent(final Order order) {
-    super(order, ZonedDateTime.now(ZoneId.of("UTC")));
+    super(eventPublisher, order, ZonedDateTime.now(ZoneId.of("UTC")));
   }
 
 }

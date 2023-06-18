@@ -1,18 +1,22 @@
 package com.food.ordering.system.domain.event;
 
 import com.food.ordering.system.domain.entity.Order;
+import com.food.ordering.system.domain.event.publisher.DomainEventPublisher;
 
 import java.time.ZonedDateTime;
 
 public abstract class OrderEvent implements DomainEvent<Order> {
 
+  protected final DomainEventPublisher<OrderEvent> eventPublisher;
   private final Order order;
   private final ZonedDateTime createdAt;
 
   protected OrderEvent(
+    final DomainEventPublisher<OrderEvent> eventPublisher,
     final Order order,
     final ZonedDateTime createdAt
   ) {
+    this.eventPublisher = eventPublisher;
     this.order = order;
     this.createdAt = createdAt;
   }

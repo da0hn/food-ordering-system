@@ -9,7 +9,7 @@ public class OrderPaidEvent extends OrderEvent {
 
 
   public OrderPaidEvent(final Order order) {
-    super(order, ZonedDateTime.now(ZoneId.of("UTC")));
+    super(eventPublisher, order, ZonedDateTime.now(ZoneId.of("UTC")));
   }
 
 }
