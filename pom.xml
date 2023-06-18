@@ -122,7 +122,12 @@
                 <artifactId>common-dataaccess</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- Kafka module dependencies -->
+            <!-- Infrastructure module dependencies -->
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>saga</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>kafka-model</artifactId>
