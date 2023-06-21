@@ -29,7 +29,7 @@ public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMe
     final var paymentResponseAvroModel = this.mapper.paymentCancelledEventToPaymentResponseAvroModel(event);
     try {
       this.kafkaProducer.send(
-        this.paymentServiceConfigData.getPaymentRequestTopicName(),
+        this.paymentServiceConfigData.getPaymentResponseTopicName(),
         orderId,
         paymentResponseAvroModel,
         this.kafkaMessageHelper.makeKafkaCallback(this.paymentServiceConfigData.getPaymentResponseTopicName(), paymentResponseAvroModel, orderId)

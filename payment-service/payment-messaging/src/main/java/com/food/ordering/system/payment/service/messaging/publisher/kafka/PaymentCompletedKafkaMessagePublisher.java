@@ -29,7 +29,7 @@ public class PaymentCompletedKafkaMessagePublisher implements PaymentCompletedMe
     final var paymentResponseAvroModel = this.mapper.paymentCompletedEventToPaymentResponseAvroModel(event);
     try {
       this.kafkaProducer.send(
-        this.paymentServiceConfigData.getPaymentRequestTopicName(),
+        this.paymentServiceConfigData.getPaymentResponseTopicName(),
         orderId,
         paymentResponseAvroModel,
         this.kafkaMessageHelper.makeKafkaCallback(this.paymentServiceConfigData.getPaymentResponseTopicName(), paymentResponseAvroModel, orderId)

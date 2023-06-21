@@ -29,7 +29,7 @@ public class PaymentFailedKafkaMessagePublisher implements PaymentFailedMessageP
     final var paymentResponseAvroModel = this.mapper.paymentFailedEventToPaymentResponseAvroModel(event);
     try {
       this.kafkaProducer.send(
-        this.paymentServiceConfigData.getPaymentRequestTopicName(),
+        this.paymentServiceConfigData.getPaymentResponseTopicName(),
         orderId,
         paymentResponseAvroModel,
         this.kafkaMessageHelper.makeKafkaCallback(this.paymentServiceConfigData.getPaymentResponseTopicName(), paymentResponseAvroModel, orderId)
