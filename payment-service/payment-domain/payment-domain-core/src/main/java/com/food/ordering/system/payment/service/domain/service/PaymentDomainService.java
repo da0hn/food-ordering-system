@@ -9,14 +9,14 @@ import java.util.List;
 
 public interface PaymentDomainService {
 
-  PaymentEvent validateAndInitiatePayment(
+  PaymentEvent<?> validateAndInitiatePayment(
     Payment payment,
     CreditEntry creditEntry,
     List<CreditHistory> creditHistories,
     List<String> failureMessages
   );
 
-  PaymentEvent validateAndCancelPayment(
+  PaymentEvent<?> validateAndCancelPayment(
     Payment payment,
     CreditEntry creditEntry,
     List<CreditHistory> creditHistories,

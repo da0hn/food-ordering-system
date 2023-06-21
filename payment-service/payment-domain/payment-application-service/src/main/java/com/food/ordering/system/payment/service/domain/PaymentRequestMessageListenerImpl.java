@@ -1,10 +1,7 @@
 package com.food.ordering.system.payment.service.domain;
 
-import com.food.ordering.system.payment.service.domain.events.PaymentCancelledEvent;
-import com.food.ordering.system.payment.service.domain.events.PaymentCompletedEvent;
-import com.food.ordering.system.payment.service.domain.events.PaymentEvent;
-import com.food.ordering.system.payment.service.domain.events.PaymentFailedEvent;
 import com.food.ordering.system.payment.service.domain.dto.PaymentRequest;
+import com.food.ordering.system.payment.service.domain.events.PaymentEvent;
 import com.food.ordering.system.payment.service.domain.ports.api.message.listener.PaymentRequestMessageListener;
 import com.food.ordering.system.payment.service.domain.ports.spi.message.publisher.PaymentCancelledMessagePublisher;
 import com.food.ordering.system.payment.service.domain.ports.spi.message.publisher.PaymentCompletedMessagePublisher;
@@ -19,9 +16,6 @@ import org.springframework.stereotype.Service;
 public class PaymentRequestMessageListenerImpl implements PaymentRequestMessageListener {
 
   private final PaymentRequestHelper paymentRequestHelper;
-  private final PaymentCompletedMessagePublisher paymentCompletedMessagePublisher;
-  private final PaymentCancelledMessagePublisher paymentCancelledMessagePublisher;
-  private final PaymentFailedMessagePublisher paymentFailedMessagePublisher;
 
   @Override
   public void completePayment(final PaymentRequest paymentRequest) {
@@ -29,17 +23,13 @@ public class PaymentRequestMessageListenerImpl implements PaymentRequestMessageL
     this.fireEvent(paymentEvent);
   }
 
-  private void fireEvent(final PaymentEvent paymentEvent) {
+  private void fireEvent(final PaymentEvent<?> paymentEvent) {
     log.info(
       "Publishing payment event with payment id: {} and order id: {}",
       paymentEvent.getPayment().getId().getValue(),
       paymentEvent.getPayment().getOrderId().getValue()
     );
-    switch (paymentEvent) {
-      case final PaymentCompletedEvent event -> this.paymentCompletedMessagePublisher.publish(event);
-      case final PaymentCancelledEvent event -> this.paymentCancelledMessagePublisher.publish(event);
-      case final PaymentFailedEvent event -> this.paymentFailedMessagePublisher.publish(event);
-    }
+    paymentEvent.fire();
   }
 
   @Override

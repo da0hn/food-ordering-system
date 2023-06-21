@@ -13,13 +13,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class OrderCreateCommandHandler {
 
-  private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
   private final OrderDataMapper orderDataMapper;
   private final OrderCreateHelper orderCreateHelper;
 
   public CreateOrderResponse handle(final CreateOrderCommand command) {
     final var orderCreatedEvent = this.orderCreateHelper.persistOrder(command);
-    this.orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
+    orderCreatedEvent.fire();
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
     return this.orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(), "Order created successfully");
   }

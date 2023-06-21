@@ -34,7 +34,7 @@ public class PaymentRequestHelper {
   private final CreditHistoryRepository creditHistoryRepository;
 
   @Transactional
-  public PaymentEvent persistPayment(final PaymentRequest paymentRequest) {
+  public PaymentEvent<?> persistPayment(final PaymentRequest paymentRequest) {
     log.info("Received payment complete event for order id: {}", paymentRequest.getOrderId());
     final var payment = this.paymentDataMapper.paymentRequestModelToPayment(paymentRequest);
     final var creditEntry = this.getCreditEntry(payment.getCustomerId());
@@ -60,7 +60,7 @@ public class PaymentRequestHelper {
   }
 
   @Transactional
-  public PaymentEvent persistCancelPayment(final PaymentRequest paymentRequest) {
+  public PaymentEvent<?> persistCancelPayment(final PaymentRequest paymentRequest) {
     log.info("Received payment rollback event for order id: {}", paymentRequest.getOrderId());
     final var maybePayment = this.paymentRepository.findByOrderId(UUID.fromString(paymentRequest.getOrderId()));
     if (maybePayment.isEmpty()) {
@@ -77,7 +77,7 @@ public class PaymentRequestHelper {
   }
 
   // FIXME: apply generic method to remove redundancy
-  private PaymentEvent executeDomainAction(
+  private PaymentEvent<?> executeDomainAction(
     final Payment payment,
     final DomainServiceAction<PaymentEvent, Payment, CreditEntry, List<CreditHistory>, List<String>> domainServiceAction
   ) {

@@ -1,12 +1,9 @@
 package com.food.ordering.system.restaurant.service.domain;
 
-import com.food.ordering.system.domain.event.publisher.DomainEventPublisher;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.events.OrderApprovalEvent;
-import com.food.ordering.system.restaurant.service.domain.events.OrderApprovedEvent;
-import com.food.ordering.system.restaurant.service.domain.events.OrderRejectedEvent;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
 import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataMapper;
 import com.food.ordering.system.restaurant.service.domain.ports.spi.message.repository.OrderApprovalRepository;
@@ -28,8 +25,6 @@ public class RestaurantApprovalRequestHelper {
   private final RestaurantDataMapper restaurantDataMapper;
   private final RestaurantRepository restaurantRepository;
   private final OrderApprovalRepository orderApprovalRepository;
-  private final DomainEventPublisher<OrderRejectedEvent> orderRejectedEventDomainEventPublisher;
-  private final DomainEventPublisher<OrderApprovedEvent> orderApprovedEventDomainEventPublisher;
 
 
   public OrderApprovalEvent<?> persistOrderApproval(final RestaurantApprovalRequest request) {
@@ -37,8 +32,6 @@ public class RestaurantApprovalRequestHelper {
     final var failureMessages = new ArrayList<String>();
     final var restaurant = this.findRestaurant(request);
     final var orderApprovalEvent = this.restaurantDomainService.validateOrder(
-      this.orderRejectedEventDomainEventPublisher,
-      this.orderApprovedEventDomainEventPublisher,
       restaurant,
       failureMessages
     );

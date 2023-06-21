@@ -5,6 +5,7 @@ import com.food.ordering.system.domain.entity.Restaurant;
 import com.food.ordering.system.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.domain.event.OrderPaidEvent;
+import com.food.ordering.system.domain.event.publisher.DomainEventPublisher;
 import com.food.ordering.system.domain.exception.OrderDomainException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,17 +14,18 @@ import java.util.List;
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
 
-  @Override
-  public OrderCreatedEvent validateAndInitiateOrder(
-    final Order order,
-    final Restaurant restaurant
+  private final DomainEventPublisher<OrderCreatedEvent> orderCreatedEventDomainEventPublisher;
+  private final DomainEventPublisher<OrderCancelledEvent> orderCancelledEventDomainEventPublisher;
+  private final DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher;
+
+  public OrderDomainServiceImpl(
+    final DomainEventPublisher<OrderCreatedEvent> orderCreatedEventDomainEventPublisher,
+    final DomainEventPublisher<OrderCancelledEvent> orderCancelledEventDomainEventPublisher,
+    final DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher
   ) {
-    validateRestaurant(restaurant);
-    setOrderProductInformation(order, restaurant);
-    order.validateOrder();
-    order.initializeOrder();
-    log.info("Order with id: {} is initialized", order.getId().getValue());
-    return new OrderCreatedEvent(order);
+    this.orderCreatedEventDomainEventPublisher = orderCreatedEventDomainEventPublisher;
+    this.orderCancelledEventDomainEventPublisher = orderCancelledEventDomainEventPublisher;
+    this.orderPaidEventDomainEventPublisher = orderPaidEventDomainEventPublisher;
   }
 
   private static void validateRestaurant(final Restaurant restaurant) {
@@ -57,10 +59,23 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   }
 
   @Override
+  public OrderCreatedEvent validateAndInitiateOrder(
+    final Order order,
+    final Restaurant restaurant
+  ) {
+    validateRestaurant(restaurant);
+    setOrderProductInformation(order, restaurant);
+    order.validateOrder();
+    order.initializeOrder();
+    log.info("Order with id: {} is initialized", order.getId().getValue());
+    return new OrderCreatedEvent(this.orderCreatedEventDomainEventPublisher, order);
+  }
+
+  @Override
   public OrderPaidEvent payOrder(final Order order) {
     order.pay();
     log.info("Order with id: {} is paid", order.getId().getValue());
-    return new OrderPaidEvent(order);
+    return new OrderPaidEvent(this.orderPaidEventDomainEventPublisher, order);
   }
 
   @Override
@@ -76,7 +91,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   ) {
     order.initializeCancel(failureMessages);
     log.info("Order payment is cancelling for order id: {}", order.getId().getValue());
-    return new OrderCancelledEvent(order);
+    return new OrderCancelledEvent(this.orderCancelledEventDomainEventPublisher, order);
   }
 
   @Override

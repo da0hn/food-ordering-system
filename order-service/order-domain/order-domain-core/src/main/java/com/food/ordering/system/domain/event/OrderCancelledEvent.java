@@ -6,7 +6,7 @@ import com.food.ordering.system.domain.event.publisher.DomainEventPublisher;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class OrderCancelledEvent extends OrderEvent {
+public class OrderCancelledEvent extends OrderEvent<DomainEventPublisher<OrderCancelledEvent>> {
 
 
   public OrderCancelledEvent(final DomainEventPublisher<OrderCancelledEvent> eventPublisher, final Order order) {
@@ -16,6 +16,6 @@ public class OrderCancelledEvent extends OrderEvent {
 
   @Override
   public void fire() {
-
+    this.eventPublisher.publish(this);
   }
 }
