@@ -62,6 +62,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     creditHistories.add(
       CreditHistory.builder()
         .creditHistoryId(CreditHistoryId.newInstance())
+        .customerId(payment.getCustomerId())
         .transactionType(transactionType)
         .amount(payment.getPrice())
         .build()
