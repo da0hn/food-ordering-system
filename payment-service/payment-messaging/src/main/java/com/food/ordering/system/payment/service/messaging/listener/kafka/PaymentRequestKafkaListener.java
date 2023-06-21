@@ -26,7 +26,7 @@ public class PaymentRequestKafkaListener implements KafkaConsumer<PaymentRequest
   @Override
   @KafkaListener(
     id = "${kafka-consumer-config.payment-consumer-group-id}",
-    topics = "${kafka-consumer-config.payment-topic-name}"
+    topics = "${payment-service.payment-request-topic-name}"
   )
   public void receive(
     @Payload final List<PaymentRequestAvroModel> message,
