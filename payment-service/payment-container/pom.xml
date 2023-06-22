@@ -42,7 +42,15 @@
                 <configuration>
                     <image>
                         <name>${project.groupId}/payment.service:${project.version}</name>
+                        <tags>
+                            <tag>${project.groupId}/payment.service:${project.version}</tag>
+                            <tag>${project.groupId}/payment.service:latest</tag>
+                        </tags>
                     </image>
+                    <layers>
+                        <enabled>true</enabled>
+                        <includeLayerTools>true</includeLayerTools>
+                    </layers>
                 </configuration>
                 <executions>
                     <execution>

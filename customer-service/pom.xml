@@ -40,7 +40,16 @@
                 <configuration>
                     <image>
                         <name>${project.groupId}/customer.service:${project.version}</name>
+                        <tags>
+                            <tag>${project.groupId}/customer.service:${project.version}</tag>
+                            <tag>${project.groupId}/customer.service:latest</tag>
+                        </tags>
                     </image>
+                    <layers>
+                        <enabled>true</enabled>
+                        <includeLayerTools>true</includeLayerTools>
+                    </layers>
+
                 </configuration>
                 <executions>
                     <execution>
